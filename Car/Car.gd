@@ -10,8 +10,9 @@ var movimientoAnterior = Vector2()
 var movement = false
 
 func _ready():
-	
+	get_node("/root/HUD").get_node("Movement").connect("start",self,"start_moving")
 	get_node("/root/HUD").get_node("Movement").connect("update",self,"move")
+	get_node("/root/HUD").get_node("Movement").connect("stop",self,"stop_moving")
 	screensize = get_viewport_rect().size
 
 func _process(delta):
@@ -40,32 +41,40 @@ func _process(delta):
 				backwards = true
 		if backwards:
 			velocity = Vector2(-time*ACCELERATION*.3,0).rotated(rotation)
-			print(velocity.x)
 		else:
 			velocity = Vector2(time*ACCELERATION,0).rotated(rotation)
-			print(velocity.x)
 		position += velocity*delta
 		direction = Vector2()
-		movement = false
-
-func move(Action):
-	direction = Action
-	direction.y *= -1  
-	movement = true
+#		movement = false
 
 func _input(event):
 	if Input.is_action_pressed("ui_right"):
 		direction.x += 1
 		movement = true
+	elif Input.is_action_just_released('ui_right'):
+		movement = false
 	if Input.is_action_pressed("ui_left"):
 		direction.x -= 1
 		movement = true 
+	elif Input.is_action_just_released('ui_left'):
+		movement = false
 	if Input.is_action_pressed("ui_up"):
 		direction.y -= 1
 		movement = true 
+	elif Input.is_action_just_released('ui_up'):
+		movement = false
 	if Input.is_action_pressed("ui_down"):
-		direction.y += 1		
+		direction.y += 1
 		movement = true
+	elif Input.is_action_just_released('ui_down'):
+		movement = false
 
-func updateDirectionJoystick(Action):
+func start_moving():
+	movement = true
+
+func stop_moving():
+	movement = false
+
+func move(Action):
 	direction = Action
+	direction.y *= -1
