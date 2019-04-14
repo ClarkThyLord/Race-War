@@ -4,15 +4,15 @@ export(bool) var Current : bool = false setget set_current
 func set_current(current):
 	$Camera2D.current = current
 	if current and has_node("/root/HUD"):
-		get_node("/root/HUD").get_node("Movement").connect("update",self,"move")
+		get_node("/root/HUD/GamePlay/Movement").connect("update",self,"move")
 		
-		get_node("/root/HUD").get_node("Shooting").connect("start",self,"rotate_gun")
-		get_node("/root/HUD").get_node("Shooting").connect("update",self,"rotate_gun")
+		get_node("/root/HUD/GamePlay/Shooting").connect("start",self,"rotate_gun")
+		get_node("/root/HUD/GamePlay/Shooting").connect("update",self,"rotate_gun")
 	if !current and Current:
-		get_node("/root/HUD").get_node("Movement").disconnect("update",self,"move")
+		get_node("/root/HUD/GamePlay/Movement").disconnect("update",self,"move")
 		
-		get_node("/root/HUD").get_node("Shooting").disconnect("start",self,"rotate_gun")
-		get_node("/root/HUD").get_node("Shooting").disconnect("update",self,"rotate_gun")
+		get_node("/root/HUD/GamePlay/Shooting").disconnect("start",self,"rotate_gun")
+		get_node("/root/HUD/GamePlay/Shooting").disconnect("update",self,"rotate_gun")
 	
 	Current = current
 
@@ -28,6 +28,9 @@ func _ready():
 	set_current(Current) 
 	CurrentSpeed=SPEED
 func _process(delta):
+	if !is_network_master():
+		return
+	
 	var velocity = Vector2(SPEED,0).rotated(rotation)
 	var backwards = false
 	var angleCursor = floor(rad2deg(direction.angle())*10)/10
