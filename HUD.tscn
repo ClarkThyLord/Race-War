@@ -26,7 +26,7 @@ __meta__ = {
 [node name="Place" type="Label" parent="Placewace"]
 margin_right = 40.0
 margin_bottom = 14.0
-text = "You are in {0} place"
+text = "You are in          place"
 align = 2
 uppercase = true
 

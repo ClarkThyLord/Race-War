@@ -19,6 +19,11 @@ config/name="Race War"
 run/main_scene="res://Gun/Gun.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+TouchHelper="*res://libraries/TouchHelper.gd"
+HUD="*res://HUD.tscn"
+
 [rendering]
 
 environment/default_environment="res://default_env.tres"
