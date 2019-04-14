@@ -25,7 +25,9 @@ extents = Vector2( 16, 16 )
 
 [node name="Map1" type="Node2D"]
 
-[node name="Corner" type="Sprite" parent="."]
+[node name="Corner" type="Sprite" parent="." groups=[
+"Corners",
+]]
 position = Vector2( 32, 64 )
 texture = ExtResource( 1 )
 
@@ -45,7 +47,9 @@ position = Vector2( -12, 0 )
 rotation = 1.5708
 shape = SubResource( 4 )
 
-[node name="Grass" type="Sprite" parent="."]
+[node name="Grass" type="Sprite" parent="." groups=[
+"Grasses",
+]]
 editor/display_folded = true
 position = Vector2( 96, 16 )
 texture = ExtResource( 2 )
@@ -58,7 +62,9 @@ __meta__ = {
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Grass/StaticBody2D"]
 shape = SubResource( 5 )
 
-[node name="Straight" type="Sprite" parent="."]
+[node name="Straight" type="Sprite" parent="." groups=[
+"Straights",
+]]
 editor/display_folded = true
 position = Vector2( 32, 16 )
 texture = ExtResource( 3 )
@@ -79,8 +85,9 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Crowd" type="Sprite" parent="."]
-editor/display_folded = true
+[node name="Crowd" type="Sprite" parent="." groups=[
+"Crowds",
+]]
 position = Vector2( 160, 16 )
 texture = ExtResource( 4 )
 __meta__ = {
