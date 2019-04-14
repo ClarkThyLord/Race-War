@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Assets/Corner.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Grass.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Straight.png" type="Texture" id=3]
 [ext_resource path="res://Assets/Crowd.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Full.png" type="Texture" id=5]
+[ext_resource path="res://Assets/FullSideSand.png" type="Texture" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 16 )
@@ -38,4 +40,16 @@ texture = ExtResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Crowd/StaticBody2D"]
 shape = SubResource( 1 )
+
+[node name="Full" type="Sprite" parent="." groups=[
+"Fulls",
+]]
+position = Vector2( 96, 64 )
+texture = ExtResource( 5 )
+
+[node name="FullWSand" type="Sprite" parent="." groups=[
+"SandyFulls",
+]]
+position = Vector2( 160, 64 )
+texture = ExtResource( 6 )
 

@@ -12,7 +12,8 @@ var power : float=250
 
 var Time :float=0
 var delay:bool = false
-
+func _ready():
+	modulate =Color((randf()*11+1)/10,(randf()*11+1)/10,(randf()*11+1)/10)
 func _process(delta):
 	if delay==true:
 		Time+=delta
