@@ -1,15 +1,13 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Car/Car.gd" type="Script" id=1]
 [ext_resource path="res://Assets/SmallCar.png" type="Texture" id=2]
-[ext_resource path="res://Gun/Gun.tscn" type="PackedScene" id=3]
 
-[sub_resource type="CircleShape2D" id=1]
-radius = 5.0
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 4.09499, 4.06704 )
 
-[node name="Car" type="KinematicBody2D" groups=[
-"Cars",
-]]
+[node name="Car" type="KinematicBody2D"]
+position = Vector2( 189.201, 127.531 )
 script = ExtResource( 1 )
 SPEED = 200.0
 ACCELERATION = 5.0
@@ -19,8 +17,8 @@ rotation = 1.5708
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 2 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 1 )
-
-[node name="Gun" parent="." instance=ExtResource( 3 )]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=[
+"Cars",
+]]
+shape = SubResource( 2 )
 
