@@ -20,7 +20,5 @@ position = Vector2( 912, 272 )
 texture = ExtResource( 2 )
 
 [node name="Car" parent="." instance=ExtResource( 3 )]
-position = Vector2( 632, 160 )
-collision_layer = 3
-motion/sync_to_physics = true
+position = Vector2( 335, 128 )
 
