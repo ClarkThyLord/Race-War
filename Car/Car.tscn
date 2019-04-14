@@ -14,6 +14,9 @@ script = ExtResource( 1 )
 SPEED = 200.0
 ACCELERATION = 5.0
 
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2( 0.25, 0.25 )
+
 [node name="Sprite" type="Sprite" parent="."]
 rotation = 1.5708
 scale = Vector2( 0.5, 0.5 )

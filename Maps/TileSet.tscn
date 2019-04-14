@@ -8,7 +8,7 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 16 )
 
-[node name="Map1" type="Node2D"]
+[node name="TileSet" type="Node2D"]
 
 [node name="Corner" type="Sprite" parent="." groups=[
 "Corners",
@@ -21,9 +21,6 @@ texture = ExtResource( 1 )
 ]]
 position = Vector2( 96, 16 )
 texture = ExtResource( 2 )
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Straight" type="Sprite" parent="." groups=[
 "Straights",
@@ -36,9 +33,6 @@ texture = ExtResource( 3 )
 ]]
 position = Vector2( 160, 16 )
 texture = ExtResource( 4 )
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Crowd"]
 
