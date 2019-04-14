@@ -7,7 +7,7 @@ var Owner
 enum GunTypes {LIGHT, MEDIUM, HEAVY}
 var type
 
-var rate : float=1
+var rate : float=0.1
 var power : float=250
 
 var Time :float=0
@@ -26,3 +26,5 @@ func _input(event):
 func shoot(): 
 	if delay==false:
 		Bullet.instance().CreateType(Owner, 0, Vector2(cos(rotation), sin(rotation)) * power)
+		delay = true
+		Time = 0

@@ -9,7 +9,7 @@ func _process(delta):
 		queue_free()
 
 func _on_Bullet_body_entered(body):  
-	if body.is_in_group("Bullets") or (body != Owner and body.is_in_group("Cars")):
+	if (body.is_in_group("Bullets") and body.Owner != Owner) or (body != Owner and body.is_in_group("Cars")):
 		queue_free()
 
 func CreateType(Owner, BulletType, Angle):

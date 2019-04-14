@@ -2,6 +2,7 @@ extends KinematicBody2D
 
 export(bool) var Current : bool = false setget set_current
 func set_current(current):
+	$Camera2D.current = current
 	if current and has_node("/root/HUD"):
 		get_node("/root/HUD").get_node("Movement").connect("start",self,"start_moving")
 		get_node("/root/HUD").get_node("Movement").connect("update",self,"move")
@@ -89,5 +90,3 @@ func rotate_gun(Action=null):
 	 
 func ModifySpeed(Rate):
 	CurrentSpeed=SPEED*Rate
-
-
