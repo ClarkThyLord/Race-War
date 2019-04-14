@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="TileSet" id=1]
+
+[node name="Map1" type="Node2D"]
+
+[node name="RaceTrack" type="Node" parent="."]
+
+[node name="Straight" type="Node" parent="RaceTrack"]
+
+[node name="TileMap" type="TileMap" parent="RaceTrack/Straight"]
+tile_set = SubResource( 1 )
+cell_size = Vector2( 32, 32 )
+
+[node name="Corner" type="Node" parent="RaceTrack"]
+
+[node name="Grass" type="Node" parent="RaceTrack"]
+
+[node name="Crowd" type="Node" parent="RaceTrack"]
+
+[node name="Flag" type="Node" parent="RaceTrack"]
+

@@ -10,5 +10,3 @@ func CreateType(BulletType, Angle):
 	 mass=BulletTypes[BulletType][0] 
 	 $Texture.texture=BulletTypes[BulletType][1] 
 	 linear_velocity =Angle
- 
- 
