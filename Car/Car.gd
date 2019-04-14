@@ -1,5 +1,24 @@
 extends KinematicBody2D
 
+export(bool) var Current : bool = false setget set_current
+func set_current(current):
+	if current and has_node("/root/HUD"):
+		get_node("/root/HUD").get_node("Movement").connect("start",self,"start_moving")
+		get_node("/root/HUD").get_node("Movement").connect("update",self,"move")
+		get_node("/root/HUD").get_node("Movement").connect("stop",self,"stop_moving")
+		
+		get_node("/root/HUD").get_node("Shooting").connect("start",self,"rotate_gun")
+		get_node("/root/HUD").get_node("Shooting").connect("update",self,"rotate_gun")
+	if !current and Current:
+		get_node("/root/HUD").get_node("Movement").disconnect("start",self,"start_moving")
+		get_node("/root/HUD").get_node("Movement").disconnect("update",self,"move")
+		get_node("/root/HUD").get_node("Movement").disconnect("stop",self,"stop_moving")
+		
+		get_node("/root/HUD").get_node("Shooting").disconnect("start",self,"rotate_gun")
+		get_node("/root/HUD").get_node("Shooting").disconnect("update",self,"rotate_gun")
+	
+	Current = current
+
 export (float) var SPEED
 export (float) var ACCELERATION 
 export (float) var LIFE 
@@ -10,10 +29,8 @@ var movimientoAnterior = Vector2()
 var movement = false
 
 func _ready():
-	get_node("/root/HUD").get_node("Movement").connect("start",self,"start_moving")
-	get_node("/root/HUD").get_node("Movement").connect("update",self,"move")
-	get_node("/root/HUD").get_node("Movement").connect("stop",self,"stop_moving")
-	screensize = get_viewport_rect().size
+	$Gun.Owner = self
+	set_current(Current)
 
 func _process(delta):
 	var velocity = Vector2()
@@ -45,7 +62,6 @@ func _process(delta):
 			velocity = Vector2(time*ACCELERATION,0).rotated(rotation)
 		position += velocity*delta
 		direction = Vector2()
-#		movement = false
 
 func _input(event):
 	if Input.is_action_pressed("ui_right"):
@@ -78,3 +94,10 @@ func stop_moving():
 func move(Action):
 	direction = Action
 	direction.y *= -1
+
+func rotate_gun(Action=null):
+	if Action == null:
+		Action = get_node("/root/HUD").get_node("Shooting").get_action()
+	
+	$Gun.look_at(to_global(Action))
+	$Gun.shoot()

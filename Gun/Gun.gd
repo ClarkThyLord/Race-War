@@ -25,11 +25,5 @@ func _input(event):
 
 func shoot(): 
 	if delay==false:
-		var bullet = Bullet.instance()
-		bullet.Owner = Owner
-		get_tree().get_root().add_child(bullet)
-		bullet.get_node('Texture').scale = Owner.scale
-		bullet.get_node('Texture').rotation = Owner.rotation
-		bullet.position = Owner.position
-		bullet.CreateType(0, Vector2(cos(Owner.rotation), sin(Owner.rotation)) * power)
 		delay=true
+		Bullet.instance().CreateType(Owner, 0, Vector2(cos(rotation), sin(rotation)) * power)
