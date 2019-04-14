@@ -8,9 +8,12 @@ var screensize
 var time = 0
 var movimientoAnterior = Vector2()
 var movement = false
+
 func _ready():
+	
 	get_node("/root/HUD").get_node("Movement").connect("update",self,"move")
 	screensize = get_viewport_rect().size
+
 func _process(delta):
 	var velocity = Vector2()
 	var backwards = false
@@ -42,15 +45,15 @@ func _process(delta):
 			velocity = Vector2(time*ACCELERATION,0).rotated(rotation)
 			print(velocity.x)
 		position += velocity*delta
-		position.x = clamp(position.x, 0, screensize.x)
-		position.y = clamp(position.y, 0, screensize.y)
 		direction = Vector2()
 		movement = false
+
 func move(Action):
 	direction = Action
 	direction.y *= -1  
 	movement = true
-func _input(event):	
+
+func _input(event):
 	if Input.is_action_pressed("ui_right"):
 		direction.x += 1
 		movement = true
