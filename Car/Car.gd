@@ -22,17 +22,14 @@ func set_current(current):
 export (float) var SPEED
 export (float) var ACCELERATION 
 export (float) var LIFE 
-var direction = Vector2()
-var screensize 
+var direction = Vector2() 
 var time = 0
-var movimientoAnterior = Vector2()
-var movement = false
-
+var movimientoAnterior = Vector2() 
+var CurrentSpeed 
 func _ready():
 	$Gun.Owner = self
-	set_current(Current)
-	screensize = get_viewport_rect().size
-
+	set_current(Current) 
+	CurrentSpeed=SPEED
 func _process(delta):
 	var velocity = Vector2(SPEED,0).rotated(rotation)
 	var backwards = false
@@ -42,7 +39,7 @@ func _process(delta):
 		angleCursor = angleCursor + 180 + 180
 	var angleRotation = floor(((rotation_degrees / 360) - floor(rotation_degrees / 360)) * 360)
 	if direction.length() != 0:
-		if time * ACCELERATION < SPEED:
+		if time * ACCELERATION < CurrentSpeed:
 			time+=1
 		
 		if angleCursor != angleRotation:
@@ -89,3 +86,8 @@ func rotate_gun(Action=null):
 	
 	$Gun.look_at(to_global(Action))
 	$Gun.shoot()
+	 
+func ModifySpeed(Rate):
+	CurrentSpeed=SPEED*Rate
+
+
