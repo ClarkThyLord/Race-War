@@ -14,8 +14,7 @@ var Active : bool = false
 var ActiveTouch : int = -1
 
 func get_action() -> Vector2:
-	var action = $Top.position.normalized()
-	return Vector2(action.x, action.y * -1)
+	return $Top.position.normalized()
 
 func _ready():
 	$Top.visible = false
