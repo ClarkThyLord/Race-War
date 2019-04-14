@@ -1,7 +1,6 @@
 extends RigidBody2D   
 var BulletTypes = [ [1, preload("res://icon.png") ] ] 
-func _on_Bullet_body_entered(body): 
-	print(body.is_in_group("Bullets"))
+func _on_Bullet_body_entered(body):  
 	if body.is_in_group("Bullets"): 
 		queue_free() 
 func CreateType(BulletType, Angle):

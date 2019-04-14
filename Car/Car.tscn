@@ -2,11 +2,11 @@
 
 [ext_resource path="res://Car/Car.gd" type="Script" id=1]
 
-[sub_resource type="StreamTexture" id=2]
+[sub_resource type="StreamTexture" id=1]
 flags = 4
 load_path = "res://.import/icon.png-487276ed1e3a0c39cad0279d744ee560.stex"
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 15.3389, 15.4856 )
 
 [node name="Car" type="KinematicBody2D"]
@@ -18,8 +18,10 @@ ACCELERATION = 5.0
 [node name="Sprite" type="Sprite" parent="."]
 rotation = 1.5708
 scale = Vector2( 0.5, 0.5 )
-texture = SubResource( 2 )
+texture = SubResource( 1 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 3 )
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=[
+"Cars",
+]]
+shape = SubResource( 2 )
 
