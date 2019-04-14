@@ -16,8 +16,6 @@ extents = Vector2( 16, 16 )
 position = Vector2( 32, 64 )
 texture = ExtResource( 1 )
 
-[node name="StaticBody2D" type="StaticBody2D" parent="Corner"]
-
 [node name="Grass" type="Sprite" parent="." groups=[
 "Grasses",
 ]]
@@ -27,15 +25,11 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="StaticBody2D" type="StaticBody2D" parent="Grass"]
-
 [node name="Straight" type="Sprite" parent="." groups=[
 "Straights",
 ]]
 position = Vector2( 32, 16 )
 texture = ExtResource( 3 )
-
-[node name="StaticBody2D" type="StaticBody2D" parent="Straight"]
 
 [node name="Crowd" type="Sprite" parent="." groups=[
 "Crowds",

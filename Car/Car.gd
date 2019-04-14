@@ -64,7 +64,7 @@ func _process(delta):
 	else:
 		velocity = Vector2(time*ACCELERATION,0).rotated(rotation)
 	
-	position += velocity*delta
+	move_and_collide(velocity*delta)
 
 func _input(event):
 	direction = Vector2()
