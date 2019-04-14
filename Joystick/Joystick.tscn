@@ -6,7 +6,9 @@
 [sub_resource type="GDScript" id=1]
 script/source = "extends Sprite
 
+signal start
 signal update(action)
+signal stop
 
 var Active : bool = false
 var ActiveTouch : int = -1
@@ -19,21 +21,16 @@ func _ready():
 	$Top.visible = false
 
 func _on_Base_mouse_exited():
-	Active = false
-	ActiveTouch = -1
-	$Top.visible = false
+	_stop()
 
 func _on_Base_input_event(viewport, event, shape_idx):
 	if (event is InputEventMouseButton or event is InputEventScreenTouch) and event.pressed:
 		if event is InputEventScreenTouch:
 			ActiveTouch = get_node('/root/TouchHelper').state.size() - 1
-		Active = true
-		$Top.visible = true
+		_start()
 		$Top.position = event.position
 	elif (event is InputEventMouseButton or event is InputEventScreenTouch) and !event.pressed:
-		Active = false
-		ActiveTouch = -1
-		$Top.visible = false
+		_stop()
 	
 	if Active and get_node('/root/TouchHelper').state.has(ActiveTouch):
 		$Top.position = to_local(get_node('/root/TouchHelper').state[ActiveTouch])
@@ -42,7 +39,17 @@ func _on_Base_input_event(viewport, event, shape_idx):
 	
 	if Active:
 		emit_signal('update', get_action())
-"
+
+func _start():
+	Active = true
+	$Top.visible = true
+	emit_signal('start')
+
+func _stop():
+	Active = false
+	ActiveTouch = -1
+	$Top.visible = false
+	emit_signal('stop')"
 
 [sub_resource type="CircleShape2D" id=2]
 radius = 70.0
