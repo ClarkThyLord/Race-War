@@ -1,5 +1,24 @@
 extends KinematicBody2D
 
+export(bool) var Current : bool = false setget set_current
+func set_current(current):
+	if current and has_node("/root/HUD"):
+		get_node("/root/HUD").get_node("Movement").connect("start",self,"start_moving")
+		get_node("/root/HUD").get_node("Movement").connect("update",self,"move")
+		get_node("/root/HUD").get_node("Movement").connect("stop",self,"stop_moving")
+		
+		get_node("/root/HUD").get_node("Shooting").connect("start",self,"rotate_gun")
+		get_node("/root/HUD").get_node("Shooting").connect("update",self,"rotate_gun")
+	if !current and Current:
+		get_node("/root/HUD").get_node("Movement").disconnect("start",self,"start_moving")
+		get_node("/root/HUD").get_node("Movement").disconnect("update",self,"move")
+		get_node("/root/HUD").get_node("Movement").disconnect("stop",self,"stop_moving")
+		
+		get_node("/root/HUD").get_node("Shooting").disconnect("start",self,"rotate_gun")
+		get_node("/root/HUD").get_node("Shooting").disconnect("update",self,"rotate_gun")
+	
+	Current = current
+
 export (float) var SPEED
 export (float) var ACCELERATION 
 export (float) var LIFE 
@@ -10,9 +29,8 @@ var movimientoAnterior = Vector2()
 var movement = false
 
 func _ready():
-	get_node("/root/HUD").get_node("Movement").connect("start",self,"start_moving")
-	get_node("/root/HUD").get_node("Movement").connect("update",self,"move")
-	get_node("/root/HUD").get_node("Movement").connect("stop",self,"stop_moving")
+	$Gun.Owner = self
+	set_current(Current)
 	screensize = get_viewport_rect().size
 
 func _process(delta):
@@ -23,10 +41,10 @@ func _process(delta):
 	if angleCursor < 0:
 		angleCursor = angleCursor + 180 + 180
 	var angleRotation = floor(((rotation_degrees / 360) - floor(rotation_degrees / 360)) * 360)
-	if movement:
+	if direction.length() != 0:
 		if time * ACCELERATION < SPEED:
 			time+=1
-		#print(str(angleCursor) +" "+ str( abs(rad2deg(velocity.angle_to(direction)))))
+		
 		if angleCursor != angleRotation:
 			if  rad2deg(velocity.angle_to(direction))>0 and abs(rad2deg(velocity.angle_to(direction)))<110:
 				rotation_degrees+=5
@@ -42,24 +60,14 @@ func _process(delta):
 			else:
 				rotation_degrees+=5
 				backwards = true
-<<<<<<< HEAD
-#		movement = false
 	else:
 		time = 0	
 	if backwards:
 		velocity = Vector2(-time*ACCELERATION*.3,0).rotated(rotation)
 	else:
 		velocity = Vector2(time*ACCELERATION,0).rotated(rotation)
+	
 	position += velocity*delta
-=======
-		if backwards:
-			velocity = Vector2(-time*ACCELERATION*.3,0).rotated(rotation)
-		else:
-			velocity = Vector2(time*ACCELERATION,0).rotated(rotation)
-		position += velocity*delta
-		direction = Vector2()
-#		movement = false
->>>>>>> parent of 7f83664... working gun, yet broken :v
 
 func _input(event):
 	direction = Vector2()
@@ -71,18 +79,13 @@ func _input(event):
 		direction.y -= 1
 	if Input.is_action_pressed("ui_down"):
 		direction.y += 1
-	if Input.is_action_pressed("ui_left") or Input.is_action_pressed("ui_right") or Input.is_action_pressed("ui_up") or Input.is_action_pressed("ui_down"):
-		movement = true
-	else:
-		movement = false
-
-func start_moving():
-	movement = true
-
-func stop_moving():
-	movement = false
 
 func move(Action):
-	print(str(Action))
 	direction = Action
-	direction.y *= -1
+
+func rotate_gun(Action=null):
+	if Action == null:
+		Action = get_node("/root/HUD").get_node("Shooting").get_action()
+	
+	$Gun.look_at(to_global(Action))
+	$Gun.shoot()
