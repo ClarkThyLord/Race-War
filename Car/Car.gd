@@ -44,11 +44,11 @@ func _process(delta):
 			time+=1
 		elif time*ACCELERATION > CurrentSpeed:
 			time = floor(CurrentSpeed/ACCELERATION)
-		if angleCursor != angleRotation:
+		if abs(angleCursor - angleRotation) > 6:
 			if  rad2deg(velocity.angle_to(direction))>0 and abs(rad2deg(velocity.angle_to(direction)))<110:
 				rotation_degrees+=5
 				backwards = false
-			elif  abs(rad2deg(velocity.angle_to(direction))) > 178 and abs(rad2deg(velocity.angle_to(direction))) < 183:
+			elif  abs(abs(rad2deg(velocity.angle_to(direction))) - 180) < 6:
 				backwards = true
 			elif  rad2deg(velocity.angle_to(direction))<0 and  abs(rad2deg(velocity.angle_to(direction)))<110:
 				rotation_degrees-=5
