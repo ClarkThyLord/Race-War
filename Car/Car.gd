@@ -42,7 +42,8 @@ func _process(delta):
 	if direction.length() != 0:
 		if time * ACCELERATION < CurrentSpeed:
 			time+=1
-		
+		elif time*ACCELERATION > CurrentSpeed:
+			time = floor(CurrentSpeed/ACCELERATION)
 		if angleCursor != angleRotation:
 			if  rad2deg(velocity.angle_to(direction))>0 and abs(rad2deg(velocity.angle_to(direction)))<110:
 				rotation_degrees+=5

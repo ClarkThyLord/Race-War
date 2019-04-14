@@ -31,7 +31,7 @@ tile_data = PoolIntArray( -1, 536870915, 0, -65536, 536870915, 0, -65535, 536870
 [node name="Car" parent="." instance=ExtResource( 2 )]
 position = Vector2( 335, 128 )
 Current = true
-SPEED = 150.0
+SPEED = 50.0
 
 [node name="Flag" type="Sprite" parent="."]
 editor/display_folded = true
