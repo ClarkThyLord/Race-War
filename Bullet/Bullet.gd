@@ -11,6 +11,9 @@ func _process(delta):
 func _on_Bullet_body_entered(body):  
 	if body.is_in_group("Bullets") or (body != Owner and body.is_in_group("Cars")):
 		queue_free()
+	if body.is_in_group("Cars"):
+		body.Life=body.Life-BulletTypes[0]
+		queue_free()
 
 func CreateType(Owner, BulletType, Angle):
 	self.Owner = Owner
