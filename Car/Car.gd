@@ -2,40 +2,37 @@ extends KinematicBody2D
 
 export (float) var SPEED
 export (float) var ACCELERATION 
-var velocity = Vector2()
+export (float) var LIFE 
+var direction = Vector2()
 var screensize 
 var time = 0
 var movimientoAnterior = Vector2()
+var movement = false
+
 func _ready():
+	
+	get_node("/root/HUD").get_node("Movement").connect("update",self,"move")
 	screensize = get_viewport_rect().size
 
 func _process(delta):
+	var velocity = Vector2()
 	var backwards = false
-	var cursorRotation = Vector2()
-	if Input.is_action_pressed("ui_right"):
-		cursorRotation.x += 1
-	if Input.is_action_pressed("ui_left"):
-		cursorRotation.x -= 1 
-	if Input.is_action_pressed("ui_up"):
-		cursorRotation.y -= 1 
-	if Input.is_action_pressed("ui_down"):
-		cursorRotation.y += 1
-	var angleCursor = floor(rad2deg(cursorRotation.angle()))
+	var angleCursor = floor(rad2deg(direction.angle()))
 	if angleCursor < 0:
 		angleCursor = angleCursor + 180 + 180
 	var angleRotation = floor(((rotation_degrees / 360) - floor(rotation_degrees / 360)) * 360)
-	if Input.is_action_pressed("ui_right") or Input.is_action_pressed("ui_left") or Input.is_action_pressed("ui_up") or Input.is_action_pressed("ui_down"):
+	if movement:
 		if time * ACCELERATION < SPEED:
 			time+=1
-		if  angleCursor != angleRotation:
+		if angleCursor != angleRotation:
 			velocity = Vector2(SPEED,0).rotated(rotation)
-			if velocity.angle_to(cursorRotation)>0 and abs(rad2deg(velocity.angle_to(cursorRotation)))<91:
+			if velocity.angle_to(direction)>0 and abs(rad2deg(velocity.angle_to(direction)))<91:
 				rotation_degrees+=2
-			elif velocity.angle_to(cursorRotation)<0 and  abs(rad2deg(velocity.angle_to(cursorRotation)))<91:
+			elif velocity.angle_to(direction)<0 and  abs(rad2deg(velocity.angle_to(direction)))<91:
 				rotation_degrees-=2
-			elif  abs(rad2deg(velocity.angle_to(cursorRotation)))==180:
+			elif  abs(rad2deg(velocity.angle_to(direction)))==180:
 				backwards = true
-			elif velocity.angle_to(cursorRotation)>0 and abs(rad2deg(velocity.angle_to(cursorRotation)))>=91:
+			elif velocity.angle_to(direction)>0 and abs(rad2deg(velocity.angle_to(direction)))>=91:
 				rotation_degrees-=2
 				backwards = true
 			else:
@@ -43,9 +40,32 @@ func _process(delta):
 				backwards = true
 		if backwards:
 			velocity = Vector2(-time*ACCELERATION*.3,0).rotated(rotation)
+			print(velocity.x)
 		else:
 			velocity = Vector2(time*ACCELERATION,0).rotated(rotation)
-		position+=velocity*delta
-		position.x = clamp(position.x, 0, screensize.x)
-		position.y = clamp(position.y, 0, screensize.y)
-	
+			print(velocity.x)
+		position += velocity*delta
+		direction = Vector2()
+		movement = false
+
+func move(Action):
+	direction = Action
+	direction.y *= -1  
+	movement = true
+
+func _input(event):
+	if Input.is_action_pressed("ui_right"):
+		direction.x += 1
+		movement = true
+	if Input.is_action_pressed("ui_left"):
+		direction.x -= 1
+		movement = true 
+	if Input.is_action_pressed("ui_up"):
+		direction.y -= 1
+		movement = true 
+	if Input.is_action_pressed("ui_down"):
+		direction.y += 1		
+		movement = true
+
+func updateDirectionJoystick(Action):
+	direction = Action

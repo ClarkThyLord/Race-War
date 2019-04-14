@@ -5,8 +5,10 @@
 [node name="HUD" type="CanvasLayer"]
 
 [node name="Movement" parent="." instance=ExtResource( 1 )]
-position = Vector2( 81.7946, 499.856 )
+position = Vector2( 125, 475 )
+scale = Vector2( 1.75, 1.75 )
 
 [node name="Shooting" parent="." instance=ExtResource( 1 )]
-position = Vector2( 917.917, 499.856 )
+position = Vector2( 900, 475 )
+scale = Vector2( 1.75, 1.75 )
 
