@@ -4,7 +4,7 @@ func _on_Bullet_body_entered(body):
 	if body.is_in_group("Bullets"): 
 		queue_free() 
 	if body.is_in_group("Cars"):
-		
+		#body.get_parent
 		queue_free()
 func CreateType(BulletType, Angle):
 	 mass=BulletTypes[BulletType][0] 
