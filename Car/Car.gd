@@ -15,7 +15,7 @@ func set_current(current):
 		get_node("/root/HUD").get_node("Shooting").disconnect("update",self,"rotate_gun")
 	
 	Current = current
-
+ 
 export (float) var SPEED
 export (float) var ACCELERATION 
 export (float) var LIFE 
@@ -28,6 +28,7 @@ func _ready():
 	set_current(Current) 
 	CurrentSpeed=SPEED
 func _process(delta):
+	 
 	var velocity = Vector2(SPEED,0).rotated(rotation)
 	var backwards = false
 	var angleCursor = floor(rad2deg(direction.angle())*10)/10
